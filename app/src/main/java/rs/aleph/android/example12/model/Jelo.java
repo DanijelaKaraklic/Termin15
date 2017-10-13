@@ -7,10 +7,10 @@ import java.util.ArrayList;
  */
 
 public class Jelo {
+    private int id;
     private String slika;
     private String naziv;
     private String opisJela;
-    private String kategorija;
     private float kalorijskaVrednost;
     private float cena;
     private float ocena;
@@ -18,19 +18,23 @@ public class Jelo {
     private ArrayList<Sastojak> sastojci;
 
 
-
-    public Jelo() {
-    }
-
-    public Jelo(String slika, String naziv, String opisJela, String kategorija, float kalorijskaVrednost, float cena,float ocena,String sastojci) {
+    public Jelo(int id, String slika, String naziv, String opisJela,float kalorijskaVrednost, float cena, float ocena, Category category) {
+        this.id = id;
         this.slika = slika;
         this.naziv = naziv;
         this.opisJela = opisJela;
-        this.kategorija = kategorija;
         this.kalorijskaVrednost = kalorijskaVrednost;
         this.cena = cena;
         this.ocena = ocena;
+        this.category = category;
     }
+
+    public Jelo() {
+
+    }
+
+
+
 
 
 
@@ -51,13 +55,7 @@ public class Jelo {
         this.opisJela = opisJela;
     }
 
-    public String getKategorija() {
-        return kategorija;
-    }
 
-    public void setKategorija(String kategorija) {
-        this.kategorija = kategorija;
-    }
 
 
 
@@ -115,13 +113,23 @@ public class Jelo {
         this.sastojci = sastojci;
     }
 
+
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     @Override
     public String toString() {
         return "Jelo{" +
-                "slika='" + slika + '\'' +
+                "id=" + id +
+                ", slika='" + slika + '\'' +
                 ", naziv='" + naziv + '\'' +
                 ", opisJela='" + opisJela + '\'' +
-                ", kategorija='" + kategorija + '\'' +
                 ", kalorijskaVrednost=" + kalorijskaVrednost +
                 ", cena=" + cena +
                 ", ocena=" + ocena +
