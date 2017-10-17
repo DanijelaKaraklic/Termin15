@@ -15,7 +15,7 @@ public class CategoryProvider {
         List<Category> categories = new ArrayList<>();
         categories.add(new Category(0, "slano"));
         categories.add(new Category(1, "slatko"));
-        categories.add(new Category(2, "slano"));
+        categories.add(new Category(2, "ljuto"));
         return categories;
     }
 
@@ -23,7 +23,7 @@ public class CategoryProvider {
         List<String> names = new ArrayList<>();
         names.add("slano");
         names.add("slatko");
-        names.add("slano");
+        names.add("ljuto");
         return names;
     }
 
@@ -34,7 +34,7 @@ public class CategoryProvider {
             case 1:
                 return new Category(1, "slatko");
             case 2:
-                return new Category(2, "slano");
+                return new Category(2, "ljuto");
             default:
                 return null;
         }

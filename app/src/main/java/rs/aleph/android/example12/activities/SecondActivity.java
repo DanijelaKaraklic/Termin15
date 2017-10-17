@@ -4,27 +4,29 @@ import android.app.Activity;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.RatingBar;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.List;
 
 import rs.aleph.android.example12.R;
-import rs.aleph.android.example12.model.Jelo;
+import rs.aleph.android.example12.providers.CategoryProvider;
+import rs.aleph.android.example12.providers.JeloProvider;
+import rs.aleph.android.example12.providers.SastojakProvider;
 
 // Each activity extends Activity class
 public class SecondActivity extends Activity {
 
     private int position = 0;
-    private Jelo[] meals = new Jelo[] {
-            new Jelo("spaghetti.jpg","spaghetti", "Spaghetti with bologneze sauce", "salty meal", 500.0f,250.00f,1.0f,"Spaghetti"),
-            new Jelo("nuggat_cake.jpg", "Nugat Cake", "Cake with a lot of cream", "sweet meal",400.0f, 350.00f,3.0f,"Chocolate cream"),
-            new Jelo("barbecue.png", "Barbecue", "Roasted a few types of meat.", "salty meal", 600.0f,740.35f,4.0f,"Lamb meat, Hamburger")
-    };
+
 
 
 
@@ -49,32 +51,10 @@ public class SecondActivity extends Activity {
 
         final int position = getIntent().getIntExtra("position", 0);
 
-
-        TextView tvName = (TextView) findViewById(R.id.tv_name);
-        tvName.setText(meals[position].getNaziv());
-
-        TextView tvOpis = (TextView) findViewById(R.id.tv_opis);
-        tvOpis.setText(meals[position].getOpisJela());
-
-
-        TextView tvKategorija = (TextView) findViewById(R.id.tv_kategorija);
-        tvKategorija.setText(meals[position].getKategorija());
-
-
-        TextView tvKalorijskaVrednost = (TextView) findViewById(R.id.tv_kalorija);
-        tvKalorijskaVrednost.setText(meals[position].getKalorijskaVrednost() + "");
-
-        TextView tvCena = (TextView) findViewById(R.id.tv_cena);
-        tvCena.setText(meals[position].getCena() + "");
-
-        RatingBar rbOcena = (RatingBar) findViewById(R.id.rb_ocena);
-        rbOcena.setRating(meals[position].getOcena());
-
-
         ImageView ivImage = (ImageView) findViewById(R.id.iv_slika);
         InputStream is = null;
         try {
-            is = getAssets().open(meals[position].getSlika());
+            is = getAssets().open(JeloProvider.getJeloById(position).getSlika());
             Drawable drawable = Drawable.createFromStream(is, null);
             ivImage.setImageDrawable(drawable);
         } catch (IOException e) {
@@ -83,15 +63,54 @@ public class SecondActivity extends Activity {
 
 
 
-        TextView tvSastojci = (TextView) findViewById(R.id.tv_sastojci);
-        tvSastojci.setText(meals[position].getSastojci() + "");
+        TextView tvName = (TextView) findViewById(R.id.tv_name);
+        tvName.setText(JeloProvider.getJeloById(position).getNaziv());
+
+        TextView tvOpis = (TextView) findViewById(R.id.tv_opis);
+        tvOpis.setText(JeloProvider.getJeloById(position).getOpisJela());
+
+
+        Spinner category = (Spinner) findViewById(R.id.sp_category);
+        List<String> categoryNames = CategoryProvider.getCategoryNames();
+        ArrayAdapter<String> adapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, categoryNames);
+        category.setAdapter(adapter);
+        category.setSelection((int)JeloProvider.getJeloById(position).getCategory().getId());
+
+
+        TextView tvCena = (TextView) findViewById(R.id.tv_cena);
+        String s = String.valueOf(JeloProvider.getJeloById(position).getCena());
+        tvCena.setText(s);
+
+
+        TextView tvKalorijskaVrednost = (TextView) findViewById(R.id.tv_kalorija);
+        s = String.valueOf(JeloProvider.getJeloById(position).getKalorijskaVrednost());
+        tvKalorijskaVrednost.setText(s);
+
+
+
+        RatingBar rbOcena = (RatingBar) findViewById(R.id.rb_ocena);
+        float r = JeloProvider.getJeloById(position).getOcena();
+        rbOcena.setRating(r);
+
+        final List<String> sastojciNaziv = SastojakProvider.getSastojciNaziv();
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<>(this, R.layout.list_item,sastojciNaziv);
+        ListView lvSastojci = (ListView)findViewById(R.id.listOfSastojak);
+        lvSastojci.setAdapter(dataAdapter);
+        for (int i=0;i<JeloProvider.getJeloById(position).getSastojci().size();i++){
+            lvSastojci.setSelection(JeloProvider.getJeloById(position).getSastojci().get(i).getId());
+        }
+       /* for(int i=0;i<JeloProvider.getJeloById(position).getSastojci().size();i++) {
+            lvSastojci.setSelection(JeloProvider.getJeloById(position).getSastojci().get(i).getId());
+        }*/
+
+
 
 
         Button btnOrder = (Button) findViewById(R.id.btn_order);
         btnOrder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast toast = Toast.makeText(v.getContext(), "You've ordered " + meals[position].getNaziv() + "!", Toast.LENGTH_LONG);
+                Toast toast = Toast.makeText(v.getContext(), "You've ordered " + JeloProvider.getJeloById(position).getNaziv() + "!", Toast.LENGTH_LONG);
                 toast.show();
             }
         });

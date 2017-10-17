@@ -12,6 +12,7 @@ import android.widget.Toast;
 import java.util.List;
 
 import rs.aleph.android.example12.R;
+import rs.aleph.android.example12.providers.JeloProvider;
 
 // Each activity extends Activity class
 public class FirstActivity extends Activity {
@@ -30,11 +31,12 @@ public class FirstActivity extends Activity {
 		Toast toast = Toast.makeText(getBaseContext(), "FirstActivity.onCreate()", Toast.LENGTH_SHORT);
 		toast.show();
 
-		final List<String> mealNames = FruitProvider.getFruitNames();
+		final List<String> mealNames = JeloProvider.getJeloNames();
 
 		// Creates an ArrayAdaptar from the array of String
-		ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, R.layout.list_item, fruitNames);
-		ListView listView = (ListView) findViewById(R.id.listofFruits);
+		ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, R.layout.list_item, mealNames);
+
+		ListView listView = (ListView) findViewById(R.id.listofMeals);
 
 		// Assigns ArrayAdaptar to ListView
 		listView.setAdapter(dataAdapter);

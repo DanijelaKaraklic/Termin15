@@ -5,23 +5,52 @@ package rs.aleph.android.example12.model;
  */
 
 public class Sastojak {
+    private int id;
     private String naziv;
     private float kolicina;
     private Jelo jelo;
 
     public Sastojak() {
     }
-
-    public Sastojak(String naziv, float kolicina) {
+    public Sastojak(int id, String naziv, float kolicina) {
+        this.id = id;
         this.naziv = naziv;
+        this.kolicina = kolicina;
+        this.jelo = jelo;
+    }
+
+   /* public Sastojak(int id, String naziv, float kolicina) {
+        this.id = id;
+        this.naziv = naziv;
+        this.kolicina = kolicina;
+    }*/
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public Jelo getJelo() {
+        return jelo;
+    }
+
+    public void setJelo(Jelo jelo) {
+        this.jelo = jelo;
+    }
+
+    public float getKolicina() {
+        return kolicina;
+    }
+
+    public void setKolicina(float kolicina) {
         this.kolicina = kolicina;
     }
 
     @Override
     public String toString() {
-        return "Sastojak{" +
-                "naziv='" + naziv + '\'' +
-                ", kolicina=" + kolicina +
-                '}';
+        return  naziv;
     }
 }

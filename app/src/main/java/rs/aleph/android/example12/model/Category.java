@@ -12,13 +12,28 @@ public class Category {
     private ArrayList<Jelo> jela;
 
     public Category() {
+        jela = new ArrayList<>();
     }
 
     public Category(int id, String naziv) {
         this.id = id;
         this.naziv = naziv;
+        jela = new ArrayList<>();
+
     }
 
+
+    public void addJelo(Jelo jelo){
+        jela.add(jelo);
+    }
+
+    public void removeJelo(Jelo jelo){
+        jela.remove( jelo);
+    }
+
+    public Jelo getJelo(int position){
+        return jela.get(position);
+    }
     public int getId() {
         return id;
     }

@@ -18,7 +18,7 @@ public class Jelo {
     private ArrayList<Sastojak> sastojci;
 
 
-    public Jelo(int id, String slika, String naziv, String opisJela,float kalorijskaVrednost, float cena, float ocena, Category category) {
+    public Jelo(int id, String slika, String naziv, String opisJela, float kalorijskaVrednost, float cena, float ocena, Category category, ArrayList<Sastojak> sastojci) {
         this.id = id;
         this.slika = slika;
         this.naziv = naziv;
@@ -27,13 +27,40 @@ public class Jelo {
         this.cena = cena;
         this.ocena = ocena;
         this.category = category;
+        this.sastojci = sastojci;
     }
+
+    public Jelo(int id, String slika, String naziv, String opisJela, float kalorijskaVrednost, float cena, float ocena, Category category) {
+        this.id = id;
+        this.slika = slika;
+        this.naziv = naziv;
+        this.opisJela = opisJela;
+        this.kalorijskaVrednost = kalorijskaVrednost;
+        this.cena = cena;
+        this.ocena = ocena;
+        this.category = category;
+        sastojci = new ArrayList<>();
+
+    }
+
+
+
 
     public Jelo() {
-
+        sastojci = new ArrayList<>();
     }
 
+    public void addSastojak(Sastojak sastojak){
+        sastojci.add(sastojak);
+    }
 
+    public void removeSastojak(Sastojak sastojak){
+        sastojci.remove(sastojak);
+    }
+
+    public Sastojak getSastojak(int position){
+        return sastojci.get(position);
+    }
 
 
 
